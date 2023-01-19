@@ -5,7 +5,7 @@ use ieee.std_logic_unsigned.all;
 Entity DadoPrototipo is
     port
     (
-    clk_50, env_data: in std_logic;--al cristal de 50MHZ y env data es el boton
+    clk_50, env_data, truc: in std_logic;--al cristal de 50MHZ y env data es el boton
     salidaDs: out std_logic_vector(5 downto 0));
 
 end DadoPrototipo;
@@ -17,7 +17,9 @@ Architecture special of DadoPrototipo is
         process(clk_50)
             begin
             if(clk_50' event and clk_50='1')then
-               if (env_data='0') then
+					if (truc='1') then
+						conteo<="011";
+               elsif (env_data='0') then
                   conteo<=conteo+'1';
                elsif (env_data='1') then
                   conteo<=conteo;
@@ -37,5 +39,5 @@ Architecture special of DadoPrototipo is
         "000000"  ;
 
     salidaDs <= conteo_deco when (env_data='1') else
-    "ZZZZZZ";    
+    "000000";    
 end special;
